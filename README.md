@@ -1,4 +1,4 @@
-# CI/CD Image to deploy to Kubernetes 
+# Alpine image with K8s and cloud tools to be used in CI/CD 
 
 This image contains everything you need to deploy to cloud.
 
