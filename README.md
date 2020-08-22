@@ -4,11 +4,15 @@ This image contains everything you need to deploy to cloud.
 
 Components installed:
 
+- docker
+- ansible
+- python 3
 - kubectl
 - helm
 - kustomize
 - ansible
 - eksctl
+- aws_iam_authenticator
 
 Cloud Providers CLI Installed:
 

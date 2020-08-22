@@ -1,9 +1,10 @@
 FROM alpine:3.10
 
-ENV HELM_VERSION=3.2.3
-ENV KUSTOMIZE_VERSION=3.6.1
-ENV DOCTL_VERSION=1.45.1
-ENV GCLOUD_VERSION=296.0.1
+ENV HELM_VERSION=3.3.0
+ENV KUSTOMIZE_VERSION=3.8.1
+ENV DOCTL_VERSION=1.46.0
+ENV GCLOUD_VERSION=306.0.0
+ENV AWS_IAM_AUTHENTICATOR="1.17.9/2020-08-04"
 
 RUN apk add --no-cache curl wget git python3 libffi-dev build-base py3-cffi ansible bash docker \
  && curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl \
@@ -26,6 +27,8 @@ RUN apk add --no-cache curl wget git python3 libffi-dev build-base py3-cffi ansi
  && echo source /google-cloud-sdk/path.bash.inc > .bashrc \
  && curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp \
  && mv /tmp/eksctl /usr/local/bin \
+ && curl --silent -o /usr/local/bin/aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/${AWS_IAM_AUTHENTICATOR}/bin/linux/amd64/aws-iam-authenticator \
+ && chmod a+x /usr/local/bin/aws-iam-authenticator \
  && pip install awscli boto3 boto botocore
 
 WORKDIR /root
