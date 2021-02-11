@@ -5,6 +5,8 @@ This image contains everything you need to deploy to cloud.
 Components installed:
 
 - docker
+- buildah
+- podman
 - ansible
 - python 3
 - kubectl
@@ -17,7 +19,7 @@ Components installed:
 Cloud Providers CLI Installed:
 
 - Google Cloud (gcloud)
-- Amazon Cloud (aws)
+- Amazon Cloud (aws-cli v2)
 - Digital Ocean (doctl)
 
 Note on Google Cloud: You need to run the command below before start to use `gcloud`:
