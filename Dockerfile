@@ -7,6 +7,12 @@ ENV GCLOUD_VERSION=327.0.0
 ENV AWS_IAM_AUTHENTICATOR="1.18.9/2020-11-02"
 
 RUN apt update -y -qq \
+ && apt install -y -qq wget curl gnupg gnupg2 gnupg1 \
+ && echo "deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.10/ /" > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list \
+ && wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_20.10/Release.key -O Release.key \
+ && apt-key add - < Release.key \
+ && rm Release.key \
+ && apt update -y -qq \
  && apt install -y -qq unzip curl wget git python3 libffi-dev build-essential python3-cffi python3-pip groff ansible bash docker iptables runc podman buildah \
  && echo 'cgroup_manager="cgroupfs"' >> /etc/containers/libpod.conf \
  && rm -rf /var/lib/apt/lists/* \
