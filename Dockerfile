@@ -1,4 +1,4 @@
-FROM ubuntu:20.10
+FROM docker.io/ubuntu:20.10
 
 ENV HELM_VERSION=3.5.2
 ENV KUSTOMIZE_VERSION=3.10.0

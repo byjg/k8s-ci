@@ -27,3 +27,7 @@ Note on Google Cloud: You need to run the command below before start to use `gcl
 ```bash
 source /google-cloud-sdk/path.bash.inc 
 ```
+
+## Tags
+
+Since tag 1.4.0 the image is compatible with platforms `amd64` and `aarch64` .
