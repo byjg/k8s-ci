@@ -17,12 +17,12 @@ podman run --rm --events-backend=file --cgroup-manager=cgroupfs --privileged doc
 
 buildah manifest create byjg/k8s-ci:latest
 
-buildah bud --override-arch arm64 --arch arm64 --iidfile /tmp/iid-arm64 -f Dockerfile -t byjg/k8s-ci:latest-arm64 .
-buildah bud --override-arch amd64 --arch amd64 --iidfile /tmp/iid-amd64 -f Dockerfile -t byjg/k8s-ci:latest-amd64 .
+buildah bud --arch arm64 --os linux --iidfile /tmp/iid-arm64 -f Dockerfile -t byjg/k8s-ci:latest-arm64 .
+buildah bud --arch amd64 --os linux --iidfile /tmp/iid-amd64 -f Dockerfile -t byjg/k8s-ci:latest-amd64 .
 
-buildah manifest add byjg/k8s-ci:latest --override-arch arm64 --arch arm64 --override-os=linux --os=linux --variant v8 $(cat /tmp/iid-arm64)
-buildah manifest add byjg/k8s-ci:latest --override-arch amd64 --arch amd64 --override-os=linux --os=linux $(cat /tmp/iid-amd64)
+buildah manifest add byjg/k8s-ci:latest --arch arm64 --os linux --variant v8 $(cat /tmp/iid-arm64)
+buildah manifest add byjg/k8s-ci:latest --arch amd64 --os linux --os=linux $(cat /tmp/iid-amd64)
 
-buildah manifest push --all byjg/k8s-ci:latest docker://byjg/k8s-ci:latest
-buildah manifest push --all byjg/k8s-ci:latest docker://byjg/k8s-ci:$TAG
+buildah manifest push --all --format v2s2 byjg/k8s-ci:latest docker://byjg/k8s-ci:latest
+buildah manifest push --all --format v2s2 byjg/k8s-ci:latest docker://byjg/k8s-ci:$TAG
 
