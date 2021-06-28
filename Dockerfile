@@ -1,19 +1,19 @@
-FROM docker.io/ubuntu:20.10
+FROM docker.io/ubuntu:impish
 
-ENV HELM_VERSION=3.5.2
-ENV KUSTOMIZE_VERSION=3.10.0
-ENV DOCTL_VERSION=1.55.0
-ENV GCLOUD_VERSION=327.0.0
-ENV AWS_IAM_AUTHENTICATOR="1.18.9/2020-11-02"
+ENV HELM_VERSION=3.6.1
+ENV KUSTOMIZE_VERSION=4.1.3
+ENV DOCTL_VERSION=1.61.0
+ENV GCLOUD_VERSION=346.0.0
+ENV AWS_IAM_AUTHENTICATOR="1.19.6/2021-01-05"
+
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=America/Toronto
 
 RUN apt update -y -qq \
  && apt install -y -qq wget curl gnupg gnupg2 gnupg1 \
- && echo "deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.10/ /" > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list \
- && wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_20.10/Release.key -O Release.key \
- && apt-key add - < Release.key \
- && rm Release.key \
- && apt update -y -qq \
- && apt install -y -qq unzip curl wget git python3 libffi-dev build-essential python3-cffi python3-pip groff ansible bash docker iptables runc podman buildah \
+          unzip curl wget git python3 libffi-dev build-essential \
+          python3-cffi python3-pip groff ansible bash \
+          docker iptables runc podman buildah \
  && echo 'cgroup_manager="cgroupfs"' >> /etc/containers/libpod.conf \
  && rm -rf /var/lib/apt/lists/* \
  && rm -rf /var/cache/apt/archives \

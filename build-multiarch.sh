@@ -3,18 +3,25 @@
 # Start k8s-ci before run this command
 # docker run --privileged -v /tmp/z:/var/lib/containers -it --rm -v $PWD:/work -w /work byjg/k8s-ci
 
-TAG="1.4.0"
+if [ -z "$DOCKER_USERNAME" ]  || [ -z "$DOCKER_PASSWORD" ] || [ -z "$DOCKER_REGISTRY" ]
+then
+  echo You need to setup \$DOCKER_USERNAME, \$DOCKER_PASSWORD and \$DOCKER_REGISTRY before run this command.
+  exit 1
+fi
+
+buildah login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD $DOCKER_REGISTRY
+
+TAG="1.5.0"
 
 podman run --rm --events-backend=file --cgroup-manager=cgroupfs --privileged docker://multiarch/qemu-user-static --reset -p yes
 
-buildah bud --arch arm64 --iidfile /tmp/iid-arm64 -f Dockerfile -t byjg/k8s-ci:latest-arm64 .
-buildah bud --arch amd64 --iidfile /tmp/iid-amd64 -f Dockerfile -t byjg/k8s-ci:latest-amd64 .
-
 buildah manifest create byjg/k8s-ci:latest
-buildah manifest add byjg/k8s-ci:latest --arch arm64 --variant v8 $(cat /tmp/iid-arm64)
-buildah manifest add byjg/k8s-ci:latest --arch amd64 $(cat /tmp/iid-amd64)
 
-buildah login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD $DOCKER_REGISTRY
+buildah bud --override-arch arm64 --arch arm64 --iidfile /tmp/iid-arm64 -f Dockerfile -t byjg/k8s-ci:latest-arm64 .
+buildah bud --override-arch amd64 --arch amd64 --iidfile /tmp/iid-amd64 -f Dockerfile -t byjg/k8s-ci:latest-amd64 .
+
+buildah manifest add byjg/k8s-ci:latest --override-arch arm64 --arch arm64 --override-os=linux --os=linux --variant v8 $(cat /tmp/iid-arm64)
+buildah manifest add byjg/k8s-ci:latest --override-arch amd64 --arch amd64 --override-os=linux --os=linux $(cat /tmp/iid-amd64)
 
 buildah manifest push --all byjg/k8s-ci:latest docker://byjg/k8s-ci:latest
 buildah manifest push --all byjg/k8s-ci:latest docker://byjg/k8s-ci:$TAG
