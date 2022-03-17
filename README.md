@@ -37,3 +37,6 @@ source /opt/google-cloud-sdk/path.bash.inc
 ## Tags
 
 Since tag 1.4.0 the image is compatible with platforms `amd64` and `aarch64` .
+
+----
+[Open source ByJG](http://opensource.byjg.com)
