@@ -1,4 +1,6 @@
-# Alpine image with K8s and cloud tools to be used in CI/CD 
+# byjg/k8s-ci
+
+A comprehensive ubuntu image with K8s and cloud tools to be used in CI/CD
 
 This image contains everything you need to deploy to cloud.
 
