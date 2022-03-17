@@ -25,7 +25,7 @@ Cloud Providers CLI Installed:
 Note on Google Cloud: You need to run the command below before start to use `gcloud`:
 
 ```bash
-source /google-cloud-sdk/path.bash.inc 
+source /opt/google-cloud-sdk/path.bash.inc 
 ```
 
 ## Tags
