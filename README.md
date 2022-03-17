@@ -1,4 +1,8 @@
 # byjg/k8s-ci
+[![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](http://opensource.byjg.com)
+[![Build Status](https://github.com/byjg/k8s-ci/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/k8s-ci/actions/workflows/phpunit.yml)
+
+## Description 
 
 A comprehensive ubuntu image with K8s and cloud tools to be used in CI/CD
 
