@@ -1,3 +1,5 @@
+# How to locate the versions
+
 * Helm: https://github.com/helm/helm/releases
 * Kustomize: https://github.com/kubernetes-sigs/kustomize/releases
 * doctl: https://github.com/digitalocean/doctl/releases

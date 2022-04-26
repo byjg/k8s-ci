@@ -1,11 +1,11 @@
 FROM docker.io/ubuntu:22.04
 
-ENV HELM_VERSION=3.8.1
-ENV KUSTOMIZE_VERSION=4.5.2
-ENV DOCTL_VERSION=1.71.0
-ENV GCLOUD_VERSION=377.0.0
+ENV HELM_VERSION=3.8.2
+ENV KUSTOMIZE_VERSION=4.5.4
+ENV DOCTL_VERSION=1.73.1
+ENV GCLOUD_VERSION=382.0.0
 ENV AWS_IAM_AUTHENTICATOR="1.21.2/2021-07-05"
-ENV EKSCTL_VERSION=v0.88.0-rc.0
+ENV EKSCTL_VERSION=v0.95.0-rc.0
 
 ARG DEBIAN_FRONTEND=noninteractive
 #ARG BUILDPLATFORM
@@ -20,7 +20,7 @@ RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; \
  && apt install -y -qq -o=Dpkg::Use-Pty=0 \
           wget curl gnupg gnupg2 gnupg1 \
           unzip curl wget git python3 libffi-dev build-essential \
-          python3-cffi python3-pip groff aufs-tools ansible bash \
+          python3-cffi python3-pip groff ansible bash \
           docker iptables runc podman buildah \
  && echo 'cgroup_manager="cgroupfs"' >> /etc/containers/libpod.conf \
  && rm -rf /var/lib/apt/lists/* \
