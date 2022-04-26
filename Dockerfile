@@ -20,7 +20,7 @@ RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; \
  && apt install -y -qq -o=Dpkg::Use-Pty=0 \
           wget curl gnupg gnupg2 gnupg1 \
           unzip curl wget git python3 libffi-dev build-essential \
-          python3-cffi python3-pip groff ansible bash \
+          python3-cffi python3-pip groff aufs-tools ansible bash \
           docker iptables runc podman buildah \
  && echo 'cgroup_manager="cgroupfs"' >> /etc/containers/libpod.conf \
  && rm -rf /var/lib/apt/lists/* \
