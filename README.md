@@ -21,7 +21,6 @@ Components installed:
 - kustomize
 - ansible
 - eksctl
-- aws_iam_authenticator (soon will be replace by eks get token)
 
 Cloud Providers CLI Installed:
 

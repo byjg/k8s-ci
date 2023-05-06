@@ -4,8 +4,7 @@ ENV HELM_VERSION=3.11.3
 ENV KUSTOMIZE_VERSION=5.0.2
 ENV DOCTL_VERSION=1.94.0
 ENV GCLOUD_VERSION=429.0.0
-ENV AWS_IAM_AUTHENTICATOR="0.5.9"
-ENV EKSCTL_VERSION=v0.141.0
+ENV EKSCTL_VERSION=v0.140.0
 
 ARG DEBIAN_FRONTEND=noninteractive
 #ARG BUILDPLATFORM
@@ -22,6 +21,8 @@ RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; \
           unzip curl wget git python3 libffi-dev build-essential \
           python3-cffi python3-pip groff ansible bash \
           docker iptables runc podman buildah \
+          jq \
+ && wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq && chmod +x /usr/bin/yq \
  && echo 'cgroup_manager="cgroupfs"' >> /etc/containers/libpod.conf \
  && rm -rf /var/lib/apt/lists/* \
  && rm -rf /var/cache/apt/archives \
@@ -38,8 +39,6 @@ RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; \
  && /opt/google-cloud-sdk/install.sh --command-completion true --path-update true -q \
  && curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/${EKSCTL_VERSION}/eksctl_$(uname -s)_${PLATFORM}.tar.gz" | tar xz -C /tmp \
  && mv /tmp/eksctl /usr/local/bin \
- && curl --silent -o /usr/local/bin/aws-iam-authenticator https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v${AWS_IAM_AUTHENTICATOR}/aws-iam-authenticator_${AWS_IAM_AUTHENTICATOR}_linux_${PLATFORM} \
- && chmod a+x /usr/local/bin/aws-iam-authenticator \
  && curl -s "https://awscli.amazonaws.com/awscli-exe-linux-${PLATFORM_AWS}.zip" -o "/tmp/awscliv2.zip" \
  && unzip -qq /tmp/awscliv2.zip -d /tmp \
  && /tmp/aws/install \
