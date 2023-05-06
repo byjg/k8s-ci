@@ -21,7 +21,7 @@ Components installed:
 - kustomize
 - ansible
 - eksctl
-- aws_iam_authenticator
+- aws_iam_authenticator (soon will be replace by eks get token)
 
 Cloud Providers CLI Installed:
 
@@ -32,7 +32,7 @@ Cloud Providers CLI Installed:
 Note on Google Cloud: You need to run the command below before start to use `gcloud`:
 
 ```bash
-source /opt/google-cloud-sdk/path.bash.inc 
+source /opt/google-cloud-sdk/path.bash.inc
 ```
 
 ## Tags

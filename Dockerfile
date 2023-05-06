@@ -1,11 +1,11 @@
 FROM docker.io/ubuntu:22.04
 
-ENV HELM_VERSION=3.8.2
-ENV KUSTOMIZE_VERSION=4.5.4
-ENV DOCTL_VERSION=1.73.1
-ENV GCLOUD_VERSION=382.0.0
-ENV AWS_IAM_AUTHENTICATOR="1.21.2/2021-07-05"
-ENV EKSCTL_VERSION=v0.95.0-rc.0
+ENV HELM_VERSION=3.11.3
+ENV KUSTOMIZE_VERSION=5.0.2
+ENV DOCTL_VERSION=1.94.0
+ENV GCLOUD_VERSION=429.0.0
+ENV AWS_IAM_AUTHENTICATOR="0.5.9"
+ENV EKSCTL_VERSION=v0.141.0
 
 ARG DEBIAN_FRONTEND=noninteractive
 #ARG BUILDPLATFORM
@@ -38,7 +38,7 @@ RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; \
  && /opt/google-cloud-sdk/install.sh --command-completion true --path-update true -q \
  && curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/${EKSCTL_VERSION}/eksctl_$(uname -s)_${PLATFORM}.tar.gz" | tar xz -C /tmp \
  && mv /tmp/eksctl /usr/local/bin \
- && curl --silent -o /usr/local/bin/aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/${AWS_IAM_AUTHENTICATOR}/bin/linux/${PLATFORM}/aws-iam-authenticator \
+ && curl --silent -o /usr/local/bin/aws-iam-authenticator https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v${AWS_IAM_AUTHENTICATOR}/aws-iam-authenticator_${AWS_IAM_AUTHENTICATOR}_linux_${PLATFORM} \
  && chmod a+x /usr/local/bin/aws-iam-authenticator \
  && curl -s "https://awscli.amazonaws.com/awscli-exe-linux-${PLATFORM_AWS}.zip" -o "/tmp/awscliv2.zip" \
  && unzip -qq /tmp/awscliv2.zip -d /tmp \
