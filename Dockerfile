@@ -1,10 +1,9 @@
-FROM docker.io/ubuntu:22.04
+FROM docker.io/ubuntu:24.04
 
-ENV HELM_VERSION=3.11.3
-ENV KUSTOMIZE_VERSION=5.0.2
-ENV DOCTL_VERSION=1.94.0
-ENV GCLOUD_VERSION=429.0.0
-ENV EKSCTL_VERSION=v0.140.0
+ENV HELM_VERSION=3.16.1
+ENV KUSTOMIZE_VERSION=5.4.3
+ENV DOCTL_VERSION=1.114.0
+ENV EKSCTL_VERSION=v0.190.0
 
 ARG DEBIAN_FRONTEND=noninteractive
 #ARG BUILDPLATFORM
@@ -35,7 +34,7 @@ RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; \
  && mv /tmp/kustomize /usr/bin/kustomize \
  && curl -Ls https://github.com/digitalocean/doctl/releases/download/v${DOCTL_VERSION}/doctl-${DOCTL_VERSION}-linux-${PLATFORM}.tar.gz | tar xz -C /tmp \
  && mv /tmp/doctl /usr/bin/doctl \
- && curl -Ls https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${GCLOUD_VERSION}-linux-${PLATFORM_GOOGLE}.tar.gz | tar xz -C /opt \
+ && curl -Ls https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-linux-${PLATFORM_GOOGLE}.tar.gz | tar xz -C /opt \
  && /opt/google-cloud-sdk/install.sh --command-completion true --path-update true -q \
  && curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/${EKSCTL_VERSION}/eksctl_$(uname -s)_${PLATFORM}.tar.gz" | tar xz -C /tmp \
  && mv /tmp/eksctl /usr/local/bin \
