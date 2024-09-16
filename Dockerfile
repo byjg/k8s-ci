@@ -19,8 +19,10 @@ RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; \
           wget curl gnupg gnupg2 gnupg1 \
           unzip curl wget git python3 libffi-dev build-essential \
           python3-cffi python3-pip groff ansible bash \
-          docker iptables runc podman buildah \
+          iptables runc podman buildah \
           jq \
+ && curl -fsSL https://get.docker.com -o get-docker.sh \
+ && sh get-docker.sh \
  && wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq && chmod +x /usr/bin/yq \
  && echo 'cgroup_manager="cgroupfs"' >> /etc/containers/libpod.conf \
  && rm -rf /var/lib/apt/lists/* \
