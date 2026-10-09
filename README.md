@@ -1,6 +1,7 @@
 # byjg/k8s-ci
 
 [![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](http://opensource.byjg.com)
+[![Install MCP Server](https://img.shields.io/badge/Install-MCP_Server-8A2BE2?logo=modelcontextprotocol&logoColor=white)](https://opensource.byjg.com/docs/ai/mcpserver-byjg-docs/)
 [![Build Status](https://github.com/byjg/k8s-ci/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/byjg/k8s-ci/actions/workflows/build.yml)
 
 ## Description
