@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# install-tools: installs, with load.sh (https://shellscript.download), the tools named
+# in CI_TOOLS, or given as arguments.
+#
+#   CI_TOOLS="kubectl helm=3.19.0 aws-cli" install-tools
+#   install-tools kubectl helm=3.19.0 aws-cli
+#
+# A tool is the name of a script of the catalog, alone for its latest version, or
+# followed by "=<version>". What is already installed is not downloaded again.
+set -euo pipefail
+
+CI_USER="ci"
+CI_HOME="/home/${CI_USER}"
+
+tools="${*:-${CI_TOOLS:-}}"
+if [[ -z "$tools" ]]; then
+  echo "install-tools: nothing to install: CI_TOOLS is empty, and no tool was given." >&2
+  exit 0
+fi
+
+# load.sh installs for a regular user, never for root, and the tools go to the home of
+# that user: whoever runs this, it is 'ci' that installs. Root hands over to it; what
+# 'ci' installs is on the PATH of every user of the image.
+if [[ "$(id -u)" == "0" ]]; then
+  exec runuser -u "$CI_USER" -- env HOME="$CI_HOME" "$0" $tools
+fi
+if [[ "$(id -un 2>/dev/null)" != "$CI_USER" ]]; then
+  echo "install-tools: run as '${CI_USER}' or as root, not as uid $(id -u): the tools are installed in ${CI_HOME}." >&2
+  exit 1
+fi
+export HOME="$CI_HOME"
+
+for tool in $tools; do
+  name="${tool%%=*}"
+  version=""
+  [[ "$tool" != *=* ]] || version="${tool#*=}"
+  echo "install-tools: ${name}${version:+ ${version}}" >&2
+  if ! load.sh "$name" ${version:+-- --version "$version"} >&2; then
+    echo "install-tools: could not install '${tool}'. The names are the ones of https://shellscript.download" >&2
+    exit 1
+  fi
+done
