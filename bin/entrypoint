@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# entrypoint: installs what CI_TOOLS names, then runs the command of the container.
+# A CI system that replaces the entrypoint of the image runs 'install-tools' itself.
+set -euo pipefail
+
+if [[ -n "${CI_TOOLS:-}" ]]; then
+  install-tools
+fi
+
+# What the tools just installed need in the shell, for a command that is not a bash
+# shellcheck source=bin/tools-env.sh
+source /etc/k8s-ci/tools-env.sh
+exec "$@"
